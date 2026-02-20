@@ -259,3 +259,105 @@ img{max-width:100%;display:block}
   .grid4{grid-template-columns:1fr}
   .twoCol{grid-template-columns:1fr}
 }
+
+
+/* ======= Photo backgrounds (to reduce "palidez") ======= */
+.section.photo{
+  position: relative;
+  overflow: hidden;
+}
+.section.photo::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: var(--photo-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: .12;
+  filter: saturate(1.15) contrast(1.05);
+  transform: scale(1.04);
+  pointer-events:none;
+}
+.section.photo::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(247,245,239,.92), rgba(247,245,239,.96));
+  pointer-events:none;
+}
+.section.photo > .container{ position:relative; z-index:1; }
+
+/* Page hero banner with image */
+.pageHero.photo{
+  position: relative;
+  overflow: hidden;
+}
+.pageHero.photo::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: var(--photo-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: .20;
+  filter: saturate(1.1) contrast(1.05);
+  transform: scale(1.03);
+  pointer-events:none;
+}
+.pageHero.photo::after{
+  content:"";
+  position:absolute; inset:0;
+  background: radial-gradient(900px 420px at 20% 20%, rgba(214,168,79,.18), transparent 60%),
+              linear-gradient(180deg, rgba(247,245,239,.92), rgba(255,255,255,.96));
+  pointer-events:none;
+}
+.pageHero.photo > .container{ position:relative; z-index:1; }
+
+/* ======= Hero background slideshow ======= */
+.heroImage{
+  border-radius: 26px;
+  overflow: hidden;
+}
+.heroImage::before,
+.heroImage::after{
+  content:"";
+  position:absolute; inset:0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 900ms ease;
+  will-change: opacity;
+}
+.heroImage::before{
+  background-image: var(--hero-bg-1);
+  opacity: 1;
+}
+.heroImage::after{
+  background-image: var(--hero-bg-2);
+  opacity: 0;
+}
+.heroImage.isAlt::before{ opacity: 0; }
+.heroImage.isAlt::after{ opacity: 1; }
+/* Keep existing gradient as subtle overlay */
+.heroImage{
+  background:
+    radial-gradient(1200px 520px at 30% 20%, rgba(47,111,62,.18), transparent 60%),
+    radial-gradient(700px 420px at 80% 40%, rgba(214,168,79,.20), transparent 62%),
+    linear-gradient(135deg, rgba(221,232,216,.65), rgba(247,245,239,.65));
+}
+
+
+
+/* Footer social links */
+.footerLinks .social{
+  margin-top: 14px;
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.footerLinks .social a{
+  font-weight:600;
+  color: var(--green-700, #2F6F3E);
+  text-decoration:none;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(47,111,62,.08);
+}
+.footerLinks .social a:hover{ background: rgba(47,111,62,.14); }
+
