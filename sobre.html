@@ -9,26 +9,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=5" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Page transition overlay (evita “vácuo” ao trocar páginas) -->
   <script>
-    try{ if(sessionStorage.getItem('g1000_nav')==='1'){ document.documentElement.classList.add('g1000-nav'); } }catch(e){}
+    // FB posts feed (Cloudflare Worker). Set this after you deploy the worker:
+    // window.G1000_FB_FEED_ENDPOINT = "https://SEU-WORKER.workers.dev/fb/posts";
+    window.G1000_FB_FEED_ENDPOINT = window.G1000_FB_FEED_ENDPOINT || "";
   </script>
-  <style>
-    #pageTransition{position:fixed;inset:0;z-index:9999;opacity:0;pointer-events:none;display:grid;place-items:center;
-      background: linear-gradient(180deg, rgba(247,245,239,.98) 0%, rgba(247,245,239,.92) 55%, rgba(247,245,239,.98) 100%);}
-    html.g1000-nav #pageTransition{opacity:1;pointer-events:auto;}
-    #pageTransition .pt-inner{display:flex;flex-direction:column;align-items:center;gap:14px;}
-    #pageTransition img{height:44px; width:auto;}
-    #pageTransition .pt-bar{width:220px;height:6px;border-radius:999px;overflow:hidden;background:rgba(47,111,62,.18);}
-    #pageTransition .pt-bar::after{content:"";display:block;height:100%;width:40%;border-radius:999px;background:rgba(47,111,62,.65);animation:ptmove 1s ease-in-out infinite;}
-    @keyframes ptmove{0%{transform:translateX(-80%)}50%{transform:translateX(120%)}100%{transform:translateX(-80%)}}
-  </style>
 
 </head>
 <body>
-  <div id=\"pageTransition\" aria-hidden=\"true\"><div class=\"pt-inner\"><img src=\"assets/img/logo-grao1000.png\" alt=\"Grão 1000\" /><div class=\"pt-bar\"></div></div></div>
+  <div class="page-anim" id="pageAnim">
 <header class="header">
   <div class="container">
     <div class="nav">
@@ -142,7 +133,8 @@
   <small>WhatsApp</small>
 </a>
 
-<script src="assets/js/main.js?v=5"></script>
+<script src="assets/js/main.js"></script>
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  </div>
 </body>
 </html>

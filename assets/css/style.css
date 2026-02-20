@@ -14,7 +14,21 @@
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html,
+/* Background photo (subtle) */
+body{ background-color: var(--bg); }
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: url("./../img/bg/hero2.webp") center/cover no-repeat;
+  opacity: .16;
+  filter: saturate(1.05) contrast(1.02);
+  z-index: -2;
+  pointer-events: none;
+}
+
+body{margin:0;padding:0}
 body{
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
@@ -481,49 +495,33 @@ img{max-width:100%;display:block}
   }
   @keyframes g1000PageExit{
     from{opacity:1; transform:translateX(0);}
-    to{opacity:.35; transform:translateX(-22px);}
+    to{opacity:0; transform:translateX(-22px);}
   }
 }
 
-
-
-/* Fundo com imagem (quebra a “palidez” sem atrapalhar leitura) */
-body::before{
-  content:"";
-  position:fixed;
+/* FB post overlay in hero */
+.heroPostLink{
+  position:absolute;
   inset:0;
-  z-index:-1;
-  background-image:url("assets/img/bg-field.webp");
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  opacity:.14;
-  filter:saturate(1.05) contrast(1.02);
-  transform:scale(1.03);
+  display:block;
+  z-index:3;
 }
-
-
-
-
-/* Overlay de transição (mantém sensação fluida entre páginas) */
-#pageTransition{
-  transition: opacity .28s ease;
+.heroPostCaption{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  z-index:4;
+  padding:10px 12px;
+  border-radius:14px;
+  background: rgba(15, 23, 42, .55);
+  backdrop-filter: blur(6px);
+  color: #f1f5f9;
+  font-size: 13px;
+  line-height: 1.25;
+  box-shadow: 0 12px 28px rgba(2,6,23,.22);
+  max-height: 3.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-html.g1000-nav #pageTransition{
-  opacity: 1;
-}
-
-
-
-
-/* Hero slideshow layers */
-.heroImage{ position:relative; overflow:hidden; }
-.heroLayer{
-  position:absolute; inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  transition: opacity .9s ease;
-}
-.heroLayer.is-on{ opacity:1; }
-
+.heroPostCaption:empty{ display:none; }
