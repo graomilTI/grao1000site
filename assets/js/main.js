@@ -20,7 +20,7 @@
     // enter animation
     document.documentElement.classList.remove('no-anim');
     document.body.classList.add('page-enter');
-    window.setTimeout(()=>document.body.classList.remove('page-enter'), 420);
+    window.setTimeout(()=>document.body.classList.remove('page-enter'), 520);
 
     function isNormalClick(e){
       return !(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey);
@@ -53,7 +53,7 @@
 
       e.preventDefault();
       document.body.classList.add('page-exit');
-      window.setTimeout(()=>{ location.href = href; }, 260);
+      window.setTimeout(()=>{ location.href = href; }, 320);
     });
 
     // When returning from bfcache
@@ -61,7 +61,7 @@
       if(e.persisted){
         document.body.classList.remove('page-exit');
         document.body.classList.add('page-enter');
-        window.setTimeout(()=>document.body.classList.remove('page-enter'), 420);
+        window.setTimeout(()=>document.body.classList.remove('page-enter'), 520);
       }
     });
   }
@@ -72,10 +72,10 @@
   const hero = document.querySelector('.hero');
   if(hero && layerA && layerB){
     const imgs = [
-      'assets/img/hero-1.webp',
-      'assets/img/hero-2.webp',
-      'assets/img/hero-3.webp',
-      'assets/img/hero-4.webp'
+      'assets/img/hero1.webp',
+      'assets/img/hero2.webp',
+      'assets/img/hero3.webp',
+      'assets/img/hero4.webp'
     ];
     let i = 0;
     let aOn = true;
