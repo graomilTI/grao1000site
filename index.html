@@ -12,16 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css" />
-
-  <script>
-    // FB posts feed (Cloudflare Worker). Set this after you deploy the worker:
-    // window.G1000_FB_FEED_ENDPOINT = "https://SEU-WORKER.workers.dev/fb/posts";
-    window.G1000_FB_FEED_ENDPOINT = window.G1000_FB_FEED_ENDPOINT || "";
-  </script>
-
 </head>
 <body>
-  <div class="page-anim" id="pageAnim">
 
 <header class="header">
   <div class="container">
@@ -244,40 +236,5 @@
 
 <script src="assets/js/main.js"></script>
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
-  </div>
-
-<script>
-async function loadFBPosts(){
-  try{
-    const res = await fetch("https://worker-site.tecnologia-f0c.workers.dev/fb/posts");
-    const data = await res.json();
-    if(!data.ok) return;
-
-    const container = document.getElementById("fb-posts");
-    if(!container) return;
-
-    container.innerHTML = "";
-
-    data.posts.slice(0,5).forEach(p=>{
-      const el = document.createElement("a");
-      el.href = p.link;
-      el.target = "_blank";
-      el.className = "fb-post";
-
-      el.innerHTML = `
-        <div class="fb-post-card">
-          ${p.img ? `<img src="${p.img}" />` : ""}
-          <div class="fb-post-text">${(p.text||"").substring(0,140)}</div>
-        </div>
-      `;
-      container.appendChild(el);
-    });
-  }catch(e){
-    console.log("FB posts error", e);
-  }
-}
-document.addEventListener("DOMContentLoaded", loadFBPosts);
-</script>
-
 </body>
 </html>
