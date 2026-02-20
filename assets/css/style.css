@@ -10,8 +10,11 @@
   --grain: #D6A84F;
   --shadow: 0 10px 30px rgba(17,24,39,.08);
   --radius: 18px;
-  --max: 1120px;
+  --max: 1320px;
+  --header-h: 74px;
+
 }
+
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -261,103 +264,92 @@ img{max-width:100%;display:block}
 }
 
 
-/* ======= Photo backgrounds (to reduce "palidez") ======= */
-.section.photo{
-  position: relative;
-  overflow: hidden;
-}
-.section.photo::before{
-  content:"";
-  position:absolute; inset:0;
-  background-image: var(--photo-bg);
-  background-size: cover;
-  background-position: center;
-  opacity: .12;
-  filter: saturate(1.15) contrast(1.05);
-  transform: scale(1.04);
-  pointer-events:none;
-}
-.section.photo::after{
-  content:"";
-  position:absolute; inset:0;
-  background: linear-gradient(180deg, rgba(247,245,239,.92), rgba(247,245,239,.96));
-  pointer-events:none;
-}
-.section.photo > .container{ position:relative; z-index:1; }
-
-/* Page hero banner with image */
-.pageHero.photo{
-  position: relative;
-  overflow: hidden;
-}
-.pageHero.photo::before{
-  content:"";
-  position:absolute; inset:0;
-  background-image: var(--photo-bg);
-  background-size: cover;
-  background-position: center;
-  opacity: .20;
-  filter: saturate(1.1) contrast(1.05);
-  transform: scale(1.03);
-  pointer-events:none;
-}
-.pageHero.photo::after{
-  content:"";
-  position:absolute; inset:0;
-  background: radial-gradient(900px 420px at 20% 20%, rgba(214,168,79,.18), transparent 60%),
-              linear-gradient(180deg, rgba(247,245,239,.92), rgba(255,255,255,.96));
-  pointer-events:none;
-}
-.pageHero.photo > .container{ position:relative; z-index:1; }
-
-/* ======= Hero background slideshow ======= */
-.heroImage{
-  border-radius: 26px;
-  overflow: hidden;
-}
-.heroImage::before,
-.heroImage::after{
-  content:"";
-  position:absolute; inset:0;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 900ms ease;
-  will-change: opacity;
-}
-.heroImage::before{
-  background-image: var(--hero-bg-1);
-  opacity: 1;
-}
-.heroImage::after{
-  background-image: var(--hero-bg-2);
-  opacity: 0;
-}
-.heroImage.isAlt::before{ opacity: 0; }
-.heroImage.isAlt::after{ opacity: 1; }
-/* Keep existing gradient as subtle overlay */
-.heroImage{
+/* ===== Visual: fundos com vida (campo/colheita) ===== */
+body{
   background:
-    radial-gradient(1200px 520px at 30% 20%, rgba(47,111,62,.18), transparent 60%),
-    radial-gradient(700px 420px at 80% 40%, rgba(214,168,79,.20), transparent 62%),
-    linear-gradient(135deg, rgba(221,232,216,.65), rgba(247,245,239,.65));
+    radial-gradient(1200px 600px at 20% 10%, rgba(214,168,79,.20), transparent 60%),
+    radial-gradient(900px 500px at 85% 20%, rgba(47,111,62,.14), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, #ffffff 55%, var(--bg) 100%);
+  background-attachment: fixed;
+}
+
+/* Seções full-bleed (fundo total, conteúdo central) */
+.section{
+  padding: 76px 0;
+}
+.section.alt{
+  position: relative;
+}
+.section.alt::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: url("../img/bg-grains.webp") center/cover no-repeat;
+  opacity:.10;
+  filter: saturate(1.05) contrast(1.05);
+  pointer-events:none;
+}
+.section.alt > *{ position: relative; z-index: 1; }
+
+/* Hero em tela cheia com slideshow de fundo */
+.hero{
+  position: relative;
+  padding: 34px 0 46px;
+  min-height: calc(100vh - var(--header-h));
+  display: grid;
+  align-items: center;
+  overflow: clip;
+  --hero-bg: url("../img/hero1.webp");
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: .22;
+  transform: scale(1.02);
+  transition: opacity 700ms ease, filter 700ms ease;
+  filter: saturate(1.08) contrast(1.05);
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(247,245,239,.92) 0%, rgba(247,245,239,.80) 45%, rgba(247,245,239,.72) 100%),
+    radial-gradient(700px 400px at 25% 35%, rgba(255,255,255,.75), transparent 55%);
+}
+.hero > .container{ position: relative; z-index: 1; }
+
+/* Deixa o card direito mais “campo” */
+.heroImage{
+  background-image:
+    radial-gradient(circle at 30% 20%, rgba(214,168,79,.35), transparent 55%),
+    radial-gradient(circle at 70% 30%, rgba(47,111,62,.22), transparent 60%),
+    linear-gradient(180deg, #E7F0E1 0%, #F7F5EF 100%);
+}
+
+/* Desktop bem largo */
+@media (min-width: 1500px){
+  :root{ --max: 1460px; }
+}
+
+/* Mobile: hero não precisa forçar 100vh */
+@media (max-width: 980px){
+  .hero{ min-height: unset; }
 }
 
 
-
-/* Footer social links */
-.footerLinks .social{
-  margin-top: 14px;
+.footerSocial{
   display:flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap:14px;
+  margin-top:14px;
 }
-.footerLinks .social a{
+.footerSocial a{
+  color: var(--brand);
   font-weight:600;
-  color: var(--green-700, #2F6F3E);
   text-decoration:none;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgba(47,111,62,.08);
 }
-.footerLinks .social a:hover{ background: rgba(47,111,62,.14); }
-
+.footerSocial a:hover{ text-decoration:underline; }
