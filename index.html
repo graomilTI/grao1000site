@@ -245,5 +245,39 @@
 <script src="assets/js/main.js"></script>
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
   </div>
+
+<script>
+async function loadFBPosts(){
+  try{
+    const res = await fetch("https://worker-site.tecnologia-f0c.workers.dev/fb/posts");
+    const data = await res.json();
+    if(!data.ok) return;
+
+    const container = document.getElementById("fb-posts");
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    data.posts.slice(0,5).forEach(p=>{
+      const el = document.createElement("a");
+      el.href = p.link;
+      el.target = "_blank";
+      el.className = "fb-post";
+
+      el.innerHTML = `
+        <div class="fb-post-card">
+          ${p.img ? `<img src="${p.img}" />` : ""}
+          <div class="fb-post-text">${(p.text||"").substring(0,140)}</div>
+        </div>
+      `;
+      container.appendChild(el);
+    });
+  }catch(e){
+    console.log("FB posts error", e);
+  }
+}
+document.addEventListener("DOMContentLoaded", loadFBPosts);
+</script>
+
 </body>
 </html>
