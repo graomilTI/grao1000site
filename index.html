@@ -1,47 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Grão1000</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Grão1000</title>
+<link rel="stylesheet" href="./assets/css/style.css"/>
 </head>
 <body>
 
-<section id="sobre">
+<header class="site-header">
+  <div class="container">
+    <h1 class="logo">Grão 1000</h1>
+    <nav class="nav">
+      <a href="#home">Home</a>
+      <a href="#solucoes">Soluções</a>
+      <a href="#qualidade">Qualidade</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="home" class="hero container">
+  <h2>Qualidade e rastreabilidade na pós‑colheita</h2>
+  <p>Padrão técnico, evidência operacional e escala nacional.</p>
+</section>
+
+<section id="metricas" class="container">
+  <h2>Métricas 2025</h2>
+  <div class="metrics-grid">
+    <div class="metric"><span id="m1">—</span><small>Toneladas classificadas</small></div>
+    <div class="metric"><span id="m2">—</span><small>Cargas processadas</small></div>
+    <div class="metric"><span id="m3">—</span><small>Pontos de embarque</small></div>
+    <div class="metric"><span id="m4">609</span><small>Colaboradores</small></div>
+  </div>
+</section>
+
+<section id="sobre" class="container">
   <h2>Sobre nós</h2>
   <p>
-    A Grão1000 é especializada em classificação, certificação e rastreabilidade de grãos,
-    atuando em todo o Brasil com processos técnicos padronizados, evidência operacional e
-    presença em múltiplas regiões.
-  </p>
-  <p>
-    Com 609 colaboradores distribuídos entre equipe administrativa, gestores e classificadores,
-    a empresa opera com escala mantendo consistência técnica, governança e confiabilidade.
+  A Grão1000 é especializada em classificação, certificação e rastreabilidade de grãos,
+  atuando em todo o Brasil com processos técnicos padronizados, evidência operacional
+  e presença em múltiplas regiões.
   </p>
 </section>
 
-<section id="mvv">
-  <h2>Missão</h2>
-  <p>
-    Garantir qualidade, padronização e evidência técnica na cadeia de grãos por meio de
-    processos confiáveis, equipe qualificada e presença operacional nacional.
-  </p>
-
-  <h2>Visão</h2>
-  <p>
-    Ser referência nacional em certificação e inteligência operacional na pós‑colheita,
-    conectando execução técnica a decisões estratégicas.
-  </p>
-
-  <h2>Valores</h2>
-  <ul>
-    <li>Rigor técnico</li>
-    <li>Transparência</li>
-    <li>Consistência operacional</li>
-    <li>Confiabilidade</li>
-    <li>Evolução contínua</li>
-    <li>Responsabilidade com dados e evidências</li>
-  </ul>
+<section id="contato" class="container">
+  <h2>Contato</h2>
+  <form class="contact-form">
+    <input placeholder="Nome"/>
+    <input placeholder="Empresa"/>
+    <input placeholder="Telefone"/>
+    <textarea placeholder="Mensagem"></textarea>
+    <button type="button">Enviar</button>
+  </form>
 </section>
 
+</main>
+
+<script src="./assets/js/main.js"></script>
 </body>
 </html>
