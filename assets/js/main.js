@@ -7,25 +7,6 @@
     });
   }
 
-  // BI polish: header shadow + progress bar
-  const header = document.querySelector('.header');
-  const progress = document.createElement('div');
-  progress.className = 'topProgress';
-  document.body.appendChild(progress);
-
-  function onScrollUi(){
-    const y = window.scrollY || 0;
-    if(header){
-      header.classList.toggle('scrolled', y > 6);
-    }
-    const doc = document.documentElement;
-    const max = Math.max(1, (doc.scrollHeight - doc.clientHeight));
-    const pct = Math.min(100, Math.max(0, (y / max) * 100));
-    progress.style.width = pct.toFixed(2) + '%';
-  }
-  window.addEventListener('scroll', onScrollUi, { passive:true });
-  onScrollUi();
-
   // Active link
   const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('[data-nav]').forEach(a=>{
@@ -134,6 +115,16 @@
     try{
       return new Intl.NumberFormat('pt-BR', opts).format(n);
     }catch(e){ return String(n); }
+
+  function fmtMonthPt_(ym) {
+    // ym: "YYYY-MM"
+    if (!ym || typeof ym !== "string") return String(ym ?? "");
+    const [y, m] = ym.split("-");
+    const mm = Number(m);
+    const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+    const sigla = meses[(mm || 1) - 1] || m;
+    return `${sigla}/${String(y).slice(-2)}`;
+  }
   }
 
   function setMetric(el, value, kind){
@@ -182,31 +173,13 @@
     const root = document.getElementById('metricas');
     if(!root) return;
     const t = HOME_METRICS?.totals || {};
-    // anima números ao entrar no viewport
-    const els = Array.from(root.querySelectorAll('[data-metric]'));
-    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{
-        if(!en.isIntersecting) return;
-        const el = en.target;
-        io.unobserve(el);
-        const k = el.getAttribute('data-metric');
-        const v = t[k];
-        if(typeof v === 'number') animateMetric_(el, v, k==='tons_total');
-      });
-    }, { threshold: 0.45 }) : null;
-
-    els.forEach(el=>{
+    root.querySelectorAll('[data-metric]').forEach(el=>{
       const k = el.getAttribute('data-metric');
       const v = t[k];
       if(typeof v === 'number'){
-        // fallback instant
         setMetric(el, v, k==='tons_total' ? 'tons' : 'int');
-        if(io) io.observe(el);
       }
     });
-
-    // sparklines nos cards de KPI
-    buildSparklines_(root);
 
     if(window.Chart){
       buildCharts_();
@@ -214,89 +187,6 @@
     if(window.L){
       buildMap_();
     }
-  }
-
-  function animateMetric_(el, target, isTons){
-    if(el.__animDone) return;
-    el.__animDone = true;
-    const start = 0;
-    const dur = 900;
-    const t0 = performance.now();
-    function step(now){
-      const p = Math.min(1, (now - t0) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const val = start + (target - start) * eased;
-      if(isTons) el.textContent = fmtNum(val, {maximumFractionDigits:0}) + ' t';
-      else el.textContent = fmtNum(val, {maximumFractionDigits:0});
-      if(p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function buildSparklines_(root){
-    const cards = root.querySelectorAll('.statCard');
-    if(!cards.length) return;
-    const series = (HOME_METRICS.monthly || []).map(x=>Number(x.tons)||0).filter(n=>Number.isFinite(n));
-    if(!series.length) return;
-
-    const css = getComputedStyle(document.documentElement);
-    const color = (css.getPropertyValue('--brand') || '#2F6F3E').trim();
-    const fill = 'rgba(47,111,62,.14)';
-
-    cards.forEach((card, idx)=>{
-      if(card.querySelector('canvas.spark')) return;
-      const c = document.createElement('canvas');
-      c.className = 'spark';
-      c.width = 360;
-      c.height = 70;
-      card.appendChild(c);
-      drawSpark_(c, series, idx, color, fill);
-    });
-  }
-
-  function drawSpark_(canvas, data, seed, stroke, fill){
-    const ctx = canvas.getContext('2d');
-    if(!ctx) return;
-    const w = canvas.width, h = canvas.height;
-    ctx.clearRect(0,0,w,h);
-    const pad = 8;
-    const xs = w - pad*2;
-    const ys = h - pad*2;
-    const min = Math.min(...data);
-    const max = Math.max(...data);
-    const span = Math.max(1, max - min);
-
-    // leve variação por card (BI "vivo")
-    const phase = (seed % 7) * 0.07;
-    const pts = data.map((v,i)=>{
-      const x = pad + (i/(data.length-1))*xs;
-      const y0 = pad + (1-((v-min)/span))*ys;
-      const y = y0 + Math.sin((i*0.9)+phase) * 1.2;
-      return {x,y};
-    });
-
-    // fill
-    ctx.beginPath();
-    ctx.moveTo(pts[0].x, h-pad);
-    pts.forEach(p=>ctx.lineTo(p.x,p.y));
-    ctx.lineTo(pts[pts.length-1].x, h-pad);
-    ctx.closePath();
-    ctx.fillStyle = fill;
-    ctx.fill();
-
-    // line
-    ctx.beginPath();
-    pts.forEach((p,i)=>{ if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
-    ctx.strokeStyle = stroke;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // last dot
-    const last = pts[pts.length-1];
-    ctx.beginPath();
-    ctx.arc(last.x,last.y,3.5,0,Math.PI*2);
-    ctx.fillStyle = stroke;
-    ctx.fill();
   }
 
   function buildCharts_(){
@@ -342,6 +232,7 @@
           datasets: [{ label:'Toneladas', data:cVals, borderWidth:0, borderRadius:10 }]
         },
         options:{
+          indexAxis:"y",
           responsive:true,
           plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(ctx)=> fmtNum(ctx.parsed.y, {maximumFractionDigits:0})+' t' } } },
           scales: {
@@ -352,31 +243,6 @@
       });
     }
 
-    // Clients
-    const cl = HOME_METRICS.topClients || [];
-    const clLabels = cl.map(x=>x.name);
-    const clVals = cl.map(x=>x.tons);
-    const c3 = document.getElementById('chartClients');
-    if(c3 && !c3.__inited){
-      c3.__inited = true;
-      new Chart(c3, {
-        type:'bar',
-        data: {
-          labels: clLabels,
-          datasets: [{ label:'Toneladas', data:clVals, borderWidth:0, borderRadius:10 }]
-        },
-        options:{
-          indexAxis:'y',
-          responsive:true,
-          plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(ctx)=> fmtNum(ctx.parsed.x, {maximumFractionDigits:0})+' t' } } },
-          scales:{
-            x: { ticks: { callback:(v)=> fmtNum(v, {notation:'compact'}) } },
-            y: { ticks: { autoSkip:false } }
-          }
-        }
-      });
-    }
-  }
 
   async function geocodeCity_(q){
     // localStorage cache (30d)
@@ -400,7 +266,145 @@
 
   function sleep_(ms){ return new Promise(r=>setTimeout(r, ms)); }
 
-  async function buildMap_(){
+    // Supervisões (extraído do material institucional) — usado no "Mapa de orientação"
+  const STATE_MANAGERS = {
+    "BA": [{ name: "Douglas Candido", phone: "(77) 9 9999-3585" }],
+    "GO": [
+      { name: "Dilson Riebau", phone: "(64) 9344-0641" },
+      { name: "Sidnei Ribeiro", phone: "(64) 9223-3113" }
+    ],
+    "MG": [{ name: "Ricardo Araújo", phone: "(34) 9729-7489" }],
+    "MT": [
+      { name: "Elizeu Lopes", phone: "(66) 9918-4053", area: "Sinop / MS / Matopipa" },
+      { name: "Jean Pablo", phone: "(66) 9607-6403", area: "Rondonópolis / Primavera do Leste" },
+      { name: "Vanuza Pereira", phone: "(66) 8457-8435", area: "Confresa" },
+      { name: "Marllon Machado", phone: "(66) 8128-4238", area: "Querência" },
+      { name: "Cleuton Albernaz", phone: "(66) 9690-9921", area: "Campo Novo do Parecis" }
+    ],
+    "MS": [{ name: "Elizeu Lopes", phone: "(66) 9918-4053" }],
+    "PR": [
+      { name: "Marcos Mota", phone: "(44) 9711-9843", area: "Cascavel" },
+      { name: "Michael Gonçalves", phone: "(43) 9182-6733", area: "Londrina" },
+      { name: "José Boa Ventura", phone: "(44) 9836-1000", area: "Maringá / Terminais Ferroviários" },
+      { name: "Michael Ribas", phone: "(42) 9834-4303", area: "Ponta Grossa e Região" }
+    ],
+    "RS": [{ name: "João Baptista", phone: "(55) 9204-6531" }],
+    "SP": [{ name: "Mayckon Inoue", phone: "(43) 9604-1000" }],
+    "TO": [{ name: "Kairo Leite", phone: "(63) 9120-1087", area: "Matopipa" }]
+  };
+
+  const STATE_ORDER = ["PR","MT","GO","MS","SP","MG","BA","RS","TO"];
+
+  function wireContactForm_() {
+    const form = $("contactForm");
+    const status = $("contactStatus");
+    if (!form) return;
+
+    form.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const company = String(data.get("company") || "").trim();
+      const phone = String(data.get("phone") || "").trim();
+      const message = String(data.get("message") || "").trim();
+
+      if (!name || !company || !phone || !message) {
+        if (status) status.textContent = "Preencha todos os campos.";
+        return;
+      }
+
+      const txt =
+        `Solicitação de contato (Site Grão 1000)%0A` +
+        `Nome: ${encodeURIComponent(name)}%0A` +
+        `Empresa: ${encodeURIComponent(company)}%0A` +
+        `Telefone: ${encodeURIComponent(phone)}%0A` +
+        `Mensagem: ${encodeURIComponent(message)}`;
+
+      // 1) tenta WhatsApp do botão do topo (se existir)
+      const wa = document.querySelector('a[href*="wa.me"], a[href*="whatsapp"]');
+      if (wa && wa.href) {
+        const url = wa.href.includes("?") ? `${wa.href}&text=${txt}` : `${wa.href}?text=${txt}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+        if (status) status.textContent = "Abrindo WhatsApp…";
+        form.reset();
+        return;
+      }
+
+      // 2) fallback: mailto
+      const mail = "contato@grao1000.com.br";
+      window.location.href = `mailto:${mail}?subject=Solicitação%20de%20contato%20-%20Site&body=${txt}`;
+      if (status) status.textContent = "Abrindo e-mail…";
+      form.reset();
+    });
+  }
+
+  function buildStateMap_() {
+    const wrap = $("stateMap");
+    const cards = $("stateCards");
+    const title = $("stateTitle");
+    const meta = $("stateMeta");
+    if (!wrap || !cards || !title || !meta) return;
+
+    wrap.innerHTML = "";
+    let activeUF = null;
+
+    const makeTile = (uf) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "stateTile";
+      btn.setAttribute("data-uf", uf);
+
+      const people = STATE_MANAGERS[uf] || [];
+      const n = people.length;
+
+      btn.innerHTML = `
+        <div class="uf">${uf}</div>
+        <div class="sub">${n} gestor${n === 1 ? "" : "es"}</div>
+      `;
+
+      btn.addEventListener("click", () => renderUF(uf));
+      return btn;
+    };
+
+    const renderUF = (uf) => {
+      activeUF = uf;
+      const people = STATE_MANAGERS[uf] || [];
+      title.textContent = uf ? `Estado: ${uf}` : "Selecione um estado";
+      meta.textContent = people.length ? `${people.length} responsável${people.length === 1 ? "" : "is"}` : "Sem dados";
+
+      // highlight
+      [...wrap.querySelectorAll(".stateTile")].forEach(el => {
+        el.classList.toggle("active", el.getAttribute("data-uf") === uf);
+      });
+
+      cards.innerHTML = "";
+      if (!people.length) {
+        cards.innerHTML = `<div class="emptyState">Sem responsáveis cadastrados para este estado.</div>`;
+        return;
+      }
+
+      for (const p of people) {
+        const d = document.createElement("div");
+        d.className = "mgrCard";
+        d.innerHTML = `
+          <div class="mgrName">${p.name}</div>
+          <div class="mgrMeta">
+            <span class="mgrPhone">${p.phone || ""}</span>
+            ${p.area ? `<span class="mgrArea">• ${p.area}</span>` : ""}
+          </div>
+        `;
+        cards.appendChild(d);
+      }
+    };
+
+    // build tiles
+    for (const uf of STATE_ORDER) wrap.appendChild(makeTile(uf));
+
+    // default state
+    renderUF(STATE_ORDER[0]);
+  }
+
+async function buildMap_(){
     const el = document.getElementById('mapCities');
     if(!el || el.__inited) return;
     el.__inited = true;

@@ -122,7 +122,7 @@
           <div class="heroStat">
             <div class="stat">
               <b>Matriz / Sede</b>
-              <span>Cascavel • PR</span>
+              <span>Avenida Brasil, 2732, ap 7 - São Cristóvão, Cascavel - PR</span>
             </div>
             <div class="stat">
               <b>Atuação</b>
@@ -188,15 +188,29 @@
           <canvas id="chartCoord" height="140"></canvas>
         </div>
 
-        <div class="vizCard vizMap">
+                <div class="vizCard vizMap">
           <div class="vizHead">
-            <h3>Mapa de atuação</h3>
-            <p>Principais cidades por volume (geocoding automático).</p>
+            <h3>Mapa de orientação</h3>
+            <p>Gestores e supervisões por estado (visão de cobertura).</p>
           </div>
-          <div id="mapCities" class="map"></div>
+
+          <div class="stateMapWrap">
+            <div id="stateMap" class="stateMap" aria-label="Mapa por estados"></div>
+            <div class="stateInfo">
+              <div class="stateInfoHead">
+                <div>
+                  <div class="kicker">Gestor por Estado</div>
+                  <div id="stateTitle" class="stateTitle">Selecione um estado</div>
+                </div>
+                <div id="stateMeta" class="stateMeta"></div>
+              </div>
+              <div id="stateCards" class="stateCards"></div>
+            </div>
+          </div>
+
           <div class="mapLegend">
             <span class="dot"></span>
-            <span>Marcadores proporcionais ao volume</span>
+            <span>Clique em um estado para ver responsáveis</span>
           </div>
         </div>
 
@@ -336,6 +350,50 @@
   </section>
 </main>
 
+    <section id="contato" class="contactSection">
+      <div class="container">
+        <div class="contactGrid">
+          <div>
+            <h2>Solicite contato</h2>
+            <p class="muted">Envie sua demanda e retornamos rapidamente com um atendimento técnico.</p>
+
+            <div class="contactHighlights">
+              <div class="chip"><span class="chipDot"></span> Atendimento Brasil</div>
+              <div class="chip"><span class="chipDot"></span> Padrão auditável</div>
+              <div class="chip"><span class="chipDot"></span> Pós-colheita</div>
+            </div>
+          </div>
+
+          <form id="contactForm" class="contactForm">
+            <div class="field">
+              <label for="cf_name">Nome</label>
+              <input id="cf_name" name="name" type="text" placeholder="Seu nome" required>
+            </div>
+
+            <div class="field">
+              <label for="cf_company">Empresa</label>
+              <input id="cf_company" name="company" type="text" placeholder="Nome da empresa" required>
+            </div>
+
+            <div class="field">
+              <label for="cf_phone">Telefone</label>
+              <input id="cf_phone" name="phone" type="tel" placeholder="(DDD) 9 9999-9999" required>
+            </div>
+
+            <div class="field fieldFull">
+              <label for="cf_message">Mensagem</label>
+              <textarea id="cf_message" name="message" rows="5" placeholder="Conte sobre sua necessidade" required></textarea>
+            </div>
+
+            <div class="formActions">
+              <button class="btnPrimary" type="submit">Enviar</button>
+              <span id="contactStatus" class="formStatus" aria-live="polite"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
 <footer class="footer">
   <div class="container">
     <div class="footerGrid">
@@ -347,7 +405,7 @@
             <div class="tag">Qualidade • Rastreabilidade • Pós-colheita</div>
           </div>
         </div>
-        <p>Matriz/Sede em <b>Cascavel • PR</b>, com atendimento em todo o Brasil.</p>
+        <p>Matriz/Sede em <b>Avenida Brasil, 2732, ap 7 - São Cristóvão, Cascavel - PR</b>, com atendimento em todo o Brasil.</p>
         <p><b>WhatsApp:</b> (45) 98341-0000</p>
         <div class="copy">© <span id="y"></span> Grão 1000. Todos os direitos reservados.</div>
       </div>
