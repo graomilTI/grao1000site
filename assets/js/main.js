@@ -170,7 +170,7 @@
     const monthValues = HOME_METRICS.monthly.map((d) => d.tons);
 
     // Volume por mês (area/linha)
-    const cvMonth = $('#chartMonth');
+    const cvMonth = $('#chartMonthly') || $('#chartMonth');
     if (cvMonth) {
       new Chart(cvMonth, {
         type: 'line',
@@ -342,29 +342,43 @@
   }
 
   function selectUF(uf) {
-    const panel = $('#stateDetail');
-    if (!panel) return;
+    const titleEl = $('#stateTitle');
+    const metaEl = $('#stateMeta');
+    const cardsEl = $('#stateCards');
+
+    if (!titleEl || !cardsEl) return;
 
     const list = GESTORES_POR_UF[uf] || [];
-    const badge = `<span class="pill">${uf}</span>`;
+
+    titleEl.textContent = uf ? `Estado: ${uf}` : 'Selecione um estado';
+    if (metaEl) metaEl.textContent = list.length ? `${list.length} responsável(is)` : 'Sem cadastro';
 
     if (!list.length) {
-      panel.innerHTML = `${badge}<h3 class="stateTitle">Sem cadastro local</h3><p class="muted">Clique em outro estado ou use o formulário de contato.</p>`;
+      cardsEl.innerHTML = `
+        <div class="stateEmpty">
+          <b>Sem cadastro local</b>
+          <p class="muted">Clique em outro estado ou use o formulário de contato.</p>
+        </div>`;
       return;
     }
 
-    panel.innerHTML = [
-      `${badge}<h3 class="stateTitle">Gestor por Estado</h3>`,
-      `<div class="statePeople">`,
-      ...list.map(
-        (p) =>
-          `<div class="personRow"><div class="personAvatar">G</div><div class="personMeta"><div class="personName">${escapeHtml(p.nome)}</div><div class="personRole">${escapeHtml(p.cargo || '')}</div></div></div>`
-      ),
-      `</div>`
-    ].join('');
+    cardsEl.innerHTML = list
+      .map((p) => {
+        const nome = escapeHtml(p.nome);
+        const cargo = escapeHtml(p.cargo || '');
+        return `
+          <div class="stateCard">
+            <div class="avatar">${nome.slice(0, 1).toUpperCase()}</div>
+            <div class="meta">
+              <div class="name">${nome}</div>
+              <div class="role">${cargo}</div>
+            </div>
+          </div>`;
+      })
+      .join('');
   }
 
-  function escapeHtml(s) {
+  function escapeHtml(s) {(s) {
     return String(s ?? '')
       .replaceAll('&', '&amp;')
       .replaceAll('<', '&lt;')
@@ -373,18 +387,153 @@
       .replaceAll("'", '&#039;');
   }
 
-  // ============================
+  
+
+// ============================
+// Navbar (mobile + active link)
+// ============================
+function initNav() {
+  const btn = document.querySelector('[data-hamburger]');
+  const mobile = document.querySelector('[data-mobile]');
+  if (btn && mobile) {
+    const close = () => {
+      mobile.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    };
+    btn.addEventListener('click', () => {
+      const isOpen = mobile.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+    // Fecha ao clicar em um item
+    mobile.querySelectorAll('a[data-nav]').forEach((a) => a.addEventListener('click', close));
+    // Fecha ao clicar fora (mobile)
+    document.addEventListener('click', (ev) => {
+      if (!mobile.classList.contains('open')) return;
+      const t = ev.target;
+      if (t === btn || btn.contains(t) || mobile.contains(t)) return;
+      close();
+    });
+  }
+
+  // Link ativo
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('a[data-nav]').forEach((a) => {
+    const href = (a.getAttribute('href') || '').toLowerCase();
+    if (href && href === path) a.classList.add('active');
+  });
+}
+
+// ============================
+// Facebook feed (com fallback)
+// ============================
+async function initFacebookFeed() {
+  const host = document.getElementById('fbPosts');
+  if (!host) return;
+
+  const endpoint = (window.G1000_FB_FEED_ENDPOINT || '').trim();
+
+  const render = (items) => {
+    host.innerHTML = items
+      .slice(0, 5)
+      .map((p) => {
+        const img = escapeHtml(p.image || '');
+        const title = escapeHtml(p.title || 'Facebook');
+        const text = escapeHtml(p.text || '');
+        const url = escapeHtml(p.url || 'https://www.facebook.com/grao1000');
+        const date = p.date ? `<div class="fbDate">${escapeHtml(p.date)}</div>` : '';
+        return `
+          <a class="fbCard" href="${url}" target="_blank" rel="noopener">
+            <div class="fbImg" style="background-image:url('${img}')"></div>
+            <div class="fbBody">
+              ${date}
+              <div class="fbTitle">${title}</div>
+              <div class="fbText">${text}</div>
+            </div>
+          </a>`;
+      })
+      .join('');
+  };
+
+  // Fallback local (não quebra o layout)
+  const localFallback = () =>
+    render([
+      { image: 'assets/img/posts/post-1.webp', title: 'Grão 1000', text: 'Acompanhe nossas atualizações no Facebook.', url: 'https://www.facebook.com/grao1000' },
+      { image: 'assets/img/posts/post-2.webp', title: 'Grão 1000', text: 'Qualidade e rastreabilidade com padrão.', url: 'https://www.facebook.com/grao1000' },
+      { image: 'assets/img/posts/post-3.webp', title: 'Grão 1000', text: 'Equipe e supervisão em campo.', url: 'https://www.facebook.com/grao1000' },
+      { image: 'assets/img/posts/post-4.webp', title: 'Grão 1000', text: 'Agilidade em períodos críticos.', url: 'https://www.facebook.com/grao1000' },
+      { image: 'assets/img/posts/post-5.webp', title: 'Grão 1000', text: 'Atendimento Brasil.', url: 'https://www.facebook.com/grao1000' }
+    ]);
+
+  if (!endpoint) {
+    localFallback();
+    return;
+  }
+
+  try {
+    const res = await fetch(endpoint, { method: 'GET', cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    // Esperado: array de posts (id, message/text, full_picture/image, permalink_url/url, created_time/date)
+    const items = (Array.isArray(data) ? data : data.items || []).map((p) => ({
+      image: p.full_picture || p.image || '',
+      title: 'Facebook',
+      text: (p.message || p.text || '').slice(0, 140),
+      url: p.permalink_url || p.url || 'https://www.facebook.com/grao1000',
+      date: p.created_time ? new Date(p.created_time).toLocaleDateString('pt-BR') : ''
+    }));
+    if (!items.length) throw new Error('empty');
+    render(items);
+  } catch (e) {
+    localFallback();
+  }
+}
+
+// ============================
+// Contato (fallback WhatsApp)
+// ============================
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  const status = document.getElementById('contactStatus');
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const fd = new FormData(form);
+    const name = (fd.get('name') || '').toString().trim();
+    const company = (fd.get('company') || '').toString().trim();
+    const phone = (fd.get('phone') || '').toString().trim();
+    const message = (fd.get('message') || '').toString().trim();
+
+    const text =
+      `Olá! Vim pelo site da Grão 1000.%0A` +
+      `Nome: ${encodeURIComponent(name)}%0A` +
+      `Empresa: ${encodeURIComponent(company)}%0A` +
+      `Telefone: ${encodeURIComponent(phone)}%0A` +
+      `Mensagem: ${encodeURIComponent(message)}`;
+
+    const url = `https://wa.me/5545998341000?text=${text}`;
+    if (status) status.textContent = 'Abrindo WhatsApp…';
+    window.open(url, '_blank', 'noopener');
+    setTimeout(() => {
+      if (status) status.textContent = 'Se não abriu automaticamente, verifique bloqueio de pop-up.';
+    }, 800);
+  });
+}
+
+// ============================
   // Init
   // ============================
   function init() {
+    initNav();
     fillTotals();
     renderStateMap();
     buildCharts();
+    initFacebookFeed();
+    initContactForm();
     initReveal();
 
-    // UX: click hint
-    const hint = $('#stateHint');
-    if (hint) hint.textContent = 'Clique em um pino para ver responsáveis';
+    // seleção inicial (se quiser deixar PR como padrão, troque para 'PR')
+    selectUF('');
   }
 
   if (document.readyState === 'loading') {
