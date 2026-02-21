@@ -612,3 +612,38 @@ async function fb_init_(){
 }
 
 
+
+
+/* ===== Premium BI: scroll reveal + smooth anchor ===== */
+(function(){
+  try{
+    // smooth anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // reveal blocks
+    const els = Array.from(document.querySelectorAll('.card, .metricCard, .postCard, section, .sectionTitle, .hero, .mapWrap'))
+      .filter(el => !el.classList.contains('noReveal'));
+    els.forEach(el=>el.classList.add('reveal'));
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){
+          ent.target.classList.add('is-in');
+          io.unobserve(ent.target);
+        }
+      });
+    }, {threshold: 0.12, rootMargin: '80px 0px -40px 0px'});
+
+    els.forEach(el=>io.observe(el));
+  }catch(err){}
+})();
+

@@ -21,6 +21,18 @@ body::after{
   z-index:-1;
 }
 :root{
+  --agroGreen:#2f6f3e;
+  --agroLime:#6cc24a;
+  --agroGold:#f2b705;
+  --ink:#0f172a;
+  --paper:#ffffff;
+  --panel: rgba(255,255,255,.78);
+  --panel2: rgba(255,255,255,.62);
+  --stroke: rgba(15,23,42,.10);
+  --shadow: 0 20px 60px rgba(15,23,42,.10);
+  --shadow2: 0 10px 30px rgba(15,23,42,.08);
+  --ease: cubic-bezier(.2,.8,.2,1);
+
   --bg: #F7F5EF;
   --card: #FFFFFF;
   --text: #1F2937;
@@ -36,7 +48,24 @@ body::after{
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html,body{
+  font-family: var(--font, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif);
+  color: var(--ink);
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(108,194,74,.35), transparent 60%),
+    radial-gradient(900px 500px at 85% 0%, rgba(242,183,5,.25), transparent 55%),
+    radial-gradient(700px 480px at 30% 90%, rgba(47,111,62,.18), transparent 60%),
+    linear-gradient(180deg, #fbf6ea 0%, #f7fbf2 45%, #ffffff 100%);
+  background-attachment: fixed;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27240%27 height=%27240%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.9%27 numOctaves=%272%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27240%27 height=%27240%27 filter=%27url(%23n)%27 opacity=%27.08%27/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+  opacity:.55;
+}
+
 body{
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
@@ -186,12 +215,14 @@ img{max-width:100%;display:block}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .card{
-  background:var(--card);
-  border:1px solid rgba(229,231,235,.9);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow:0 8px 18px rgba(17,24,39,.04);
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow2);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
+
 .card h3{margin:0 0 8px 0;font-size:16px}
 .card p{margin:0;color:var(--muted);line-height:1.65;font-size:14px}
 .icon{
@@ -932,3 +963,12 @@ body::before{
   font-size: 12px;
   color: rgba(15,23,42,.75);
 }
+
+
+/* ===== Premium BI motion ===== */
+.reveal{opacity:0;transform:translateY(16px) scale(.995);filter:saturate(.9);transition:opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease);will-change:opacity,transform;}
+.reveal.is-in{opacity:1;transform:none;filter:none;}
+.iconBtn, .btn{transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease);}
+.iconBtn:hover, .btn:hover{transform:translateY(-2px);}
+.sectionDivider{position:relative;}
+.sectionDivider::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:120px;pointer-events:none;background:radial-gradient(60% 100% at 50% 0%, rgba(242,183,5,.22), transparent 70%);}
