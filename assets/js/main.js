@@ -494,29 +494,37 @@ async function initFacebookFeed() {
 function initContactForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
-  const status = document.getElementById('contactStatus');
+
+  const hint = document.getElementById('formHint');
 
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
+
     const fd = new FormData(form);
-    const name = (fd.get('name') || '').toString().trim();
-    const company = (fd.get('company') || '').toString().trim();
-    const phone = (fd.get('phone') || '').toString().trim();
-    const message = (fd.get('message') || '').toString().trim();
+    const nome = (fd.get('nome') || '').toString().trim();
+    const local = (fd.get('local') || '').toString().trim();
+    const cultura = (fd.get('cultura') || '').toString().trim();
+    const periodo = (fd.get('periodo') || '').toString().trim();
+    const msg = (fd.get('mensagem') || '').toString().trim();
 
-    const text =
-      `Olá! Vim pelo site da Grão 1000.%0A` +
-      `Nome: ${encodeURIComponent(name)}%0A` +
-      `Empresa: ${encodeURIComponent(company)}%0A` +
-      `Telefone: ${encodeURIComponent(phone)}%0A` +
-      `Mensagem: ${encodeURIComponent(message)}`;
+    const parts = [
+      'Olá! Quero um atendimento com a Grão 1000.',
+      nome ? `Nome: ${nome}` : null,
+      local ? `Cidade/UF: ${local}` : null,
+      cultura ? `Cultura: ${cultura}` : null,
+      periodo ? `Período: ${periodo}` : null,
+      msg ? `Mensagem: ${msg}` : null
+    ].filter(Boolean);
 
-    const url = `https://wa.me/5545998341000?text=${text}`;
-    if (status) status.textContent = 'Abrindo WhatsApp…';
+    const text = encodeURIComponent(parts.join('\n'));
+    const url = `https://wa.me/5545983410000?text=${text}`;
+
+    if (hint) {
+      hint.textContent = 'Abrindo o WhatsApp…';
+      setTimeout(() => (hint.textContent = 'Ao enviar, abrimos o WhatsApp com a mensagem pronta.'), 1800);
+    }
+
     window.open(url, '_blank', 'noopener');
-    setTimeout(() => {
-      if (status) status.textContent = 'Se não abriu automaticamente, verifique bloqueio de pop-up.';
-    }, 800);
   });
 }
 
@@ -525,6 +533,8 @@ function initContactForm() {
   // ============================
   function init() {
     initNav();
+    const y = document.getElementById('year');
+    if (y) y.textContent = String(new Date().getFullYear());
     fillTotals();
     renderStateMap();
     buildCharts();

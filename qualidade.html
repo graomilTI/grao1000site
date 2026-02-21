@@ -4,153 +4,209 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Qualidade & Rastreabilidade | Grão 1000</title>
-  <meta name="theme-color" content="#2F6F3E" />
-  <link rel="icon" href="assets/img/logo-grao1000.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Metodologia de qualidade e rastreabilidade da Grão 1000: processo simples, replicável e auditável para operação real." />
+  <link rel="icon" href="assets/img/logo-grao1000-small.png" />
   <link rel="stylesheet" href="assets/css/style.css" />
-
-  <script>
-    // FB posts feed (Cloudflare Worker). Set this after you deploy the worker:
-    // window.G1000_FB_FEED_ENDPOINT = "https://SEU-WORKER.workers.dev/fb/posts";
-    window.G1000_FB_FEED_ENDPOINT = window.G1000_FB_FEED_ENDPOINT || "";
-  </script>
-
+  
 </head>
-<body>
-  <div class="page-anim" id="pageAnim">
-<header class="header">
-  <div class="container">
-    <div class="nav">
-      <a class="brand" href="index.html" aria-label="Ir para a Home">
-        <img src="assets/img/logo-grao1000-small.png" srcset="assets/img/logo-grao1000.png 1x, assets/img/logo-grao1000@2x.png 2x" alt="Logo Grão 1000" />
-        <div>
-          <div class="name">Grão 1000</div>
-          <div class="tag">Qualidade • Rastreabilidade • Pós-colheita</div>
-        </div>
-      </a>
-
-      <nav class="menu" aria-label="Menu principal">
-        <a data-nav href="index.html">Home</a>
-        <a data-nav href="solucoes.html">Soluções</a>
-        <a data-nav href="qualidade.html">Qualidade</a>
-        <a data-nav href="sobre.html">Sobre</a>
-        <a data-nav href="contato.html">Contato</a>
-      </nav>
-
-      <div class="topActions">
-        <div class="iconRow" aria-label="Redes e links rápidos">
-          <a class="iconBtn" href="https://www.facebook.com/grao1000" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 22v-8h2.7l.5-3H13.5V9.1c0-.9.3-1.6 1.7-1.6H16.8V4.7c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1V11H7.8v3h2.6v8h3.1z"/></svg>
-          </a>
-          <a class="iconBtn" href="https://www.instagram.com/grao.1000/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg>
-          </a>
-          <a class="iconBtn" href="https://www.reachr.com.br/rch/#/graomil-ltda/vagas" target="_blank" rel="noopener" aria-label="Vagas (Reachr)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-4V5a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v2H4"/><path d="M4 7h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M12 12v3"/><path d="M10.5 13.5h3"/></svg>
-          </a>
-          <a class="btn grain" href="https://www.grmserver.com.br/login" target="_blank" rel="noopener">Grain\'t</a>
-          <a class="btn painel" href="https://grao1000.com.br/painel" target="_blank" rel="noopener">Painel</a>
-        </div>
-        <a class="iconBtn" href="https://wa.me/5545998341000?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Gr%C3%A3o%201000%20e%20quero%20falar%20sobre%20servi%C3%A7os%20de%20qualidade%20e%20rastreabilidade%20de%20gr%C3%A3os." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L4 20l1.2-3.1A8.5 8.5 0 1 1 20 11.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.6 7.9c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.4 1.9.8 2.3.6 2.7.6.4-.1 1.2-.5 1.4-1 .2-.5.2-1 .1-1.1-.1-.1-.3-.2-.6-.3l-1.3-.6c-.3-.1-.5-.1-.7.1l-.5.6c-.2.2-.4.2-.7.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-.6-1.5z" fill="currentColor" opacity=".85"/></svg></a>
-        <button class="hamburger" data-hamburger aria-label="Abrir menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+<body class="theme-premium">
+<header class="siteHeader" id="top">
+  <div class="container headerInner">
+    <a class="brand" href="index.html" aria-label="Ir para a Home">
+      <img class="brandLogo" src="assets/img/logo-grao1000-small.png" srcset="assets/img/logo-grao1000.png 1x, assets/img/logo-grao1000@2x.png 2x" alt="Logo Grão 1000" />
+      <div class="brandText">
+        <div class="brandName">Grão 1000</div>
+        <div class="brandTag">Qualidade • Rastreabilidade • Pós-colheita</div>
       </div>
-    </div>
+    </a>
 
-    <div class="mobile" data-mobile aria-label="Menu mobile">
+    <button class="navToggle" id="navToggle" data-hamburger aria-label="Abrir menu" aria-controls="siteNav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="siteNav" id="siteNav" data-mobile aria-label="Menu principal">
       <a data-nav href="index.html">Home</a>
       <a data-nav href="solucoes.html">Soluções</a>
       <a data-nav href="qualidade.html">Qualidade</a>
       <a data-nav href="sobre.html">Sobre</a>
       <a data-nav href="contato.html">Contato</a>
-      <div style="display:grid;gap:10px;margin-top:10px">
-        <a class="btn" href="https://grao1000.com.br/painel" target="_blank" rel="noopener">Painel Gestor/ADM</a>
-        <a class="btn" href="https://www.reachr.com.br/rch/#/graomil-ltda/vagas" target="_blank" rel="noopener">Vagas</a>
-        <a class="btn" href="https://www.instagram.com/grao.1000/" target="_blank" rel="noopener">Instagram</a>
-        <a class="btn" href="https://www.facebook.com/grao1000" target="_blank" rel="noopener">Facebook</a>
-        <a class="iconBtn" href="https://wa.me/5545998341000?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Gr%C3%A3o%201000%20e%20quero%20falar%20sobre%20servi%C3%A7os%20de%20qualidade%20e%20rastreabilidade%20de%20gr%C3%A3os." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L4 20l1.2-3.1A8.5 8.5 0 1 1 20 11.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.6 7.9c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.4 1.9.8 2.3.6 2.7.6.4-.1 1.2-.5 1.4-1 .2-.5.2-1 .1-1.1-.1-.1-.3-.2-.6-.3l-1.3-.6c-.3-.1-.5-.1-.7.1l-.5.6c-.2.2-.4.2-.7.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-.6-1.5z" fill="currentColor" opacity=".85"/></svg></a>
-      </div>
+    </nav>
+
+    <div class="headerActions">
+      <a class="iconBtn" href="https://www.facebook.com/grao1000" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4v-3c0-.6.4-1 1-1z"/></svg>
+      </a>
+      <a class="iconBtn" href="https://www.instagram.com/grao.1000/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/>
+          <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
+          <path d="M17.5 6.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+        </svg>
+      </a>
+      <a class="pillBtn" href="https://www.reachr.com.br/rch/#/graomil-ltda/vagas" target="_blank" rel="noopener">Vagas</a>
+      <a class="pillBtn pillGold" href="https://grao1000.com.br/painel" target="_blank" rel="noopener">Painel</a>
     </div>
   </div>
 </header>
-
 <main>
-  <section class="pageHero">
-    <div class="container">
-      <div class="wrap">
-        <p class="breadcrumb">Home / Qualidade</p>
-        <h1 class="h1" style="margin:0 0 10px 0">Qualidade & Rastreabilidade</h1>
-        <p class="p">Qualidade forte é aquela que se sustenta em processo, padrão e evidência. Aqui está como a Grão 1000 estrutura isso na prática.</p>
-      </div>
-    </div>
-  </section>
-
-    <section class="section">
-    <div class="container">
-      <div class="sectionTitle">
-        <div>
-          <h2 class="h2">Nossa metodologia</h2>
-          <p class="small">Processo simples, replicável e auditável — pensado para operação real.</p>
+  <section class="hero hero--image" style="--hero-img:url('assets/img/bg/hero3.webp')">
+    <div class="container heroGrid">
+      <div class="heroCopy">
+        <div class="kicker">Qualidade • Padrão • Evidência</div>
+        <h1>Qualidade forte é processo, rotina e evidência</h1>
+        <p class="lead">Estruturamos critérios técnicos, rotinas e registros para reduzir variação e aumentar previsibilidade na operação.</p>
+        <div class="heroCtas">
+          <a class="btn btnPrimary" href="https://wa.me/5545983410000?text=Olá!%20Quero%20melhorar%20o%20controle%20de%20qualidade%20na%20minha%20operação.%20Cidade/UF:%20____%20Cultura:%20____" target="_blank" rel="noopener">Falar com especialista</a>
+<a class="btn btnGhost" href="assets/docs/apresentacao-grao1000.pdf" target="_blank" rel="noopener">Apresentação (PDF)</a>
+        </div>
+        <div class="trustRow">
+          <div class="trustItem"><strong>Soja</strong><span>classificação & laudos</span></div>
+          <div class="trustItem"><strong>Trigo</strong><span>padrão & consistência</span></div>
+          <div class="trustItem"><strong>Milho</strong><span>pós-colheita & suporte</span></div>
         </div>
       </div>
-
-      <div class="timeline">
-        <div class="step"><div class="num">1</div><b>Diagnóstico</b><span>Entendimento do fluxo atual, gargalos e pontos de atenção.</span></div>
-        <div class="step"><div class="num">2</div><b>Critérios</b><span>Definição/adequação de critérios técnicos e padrões de execução.</span></div>
-        <div class="step"><div class="num">3</div><b>Rotina</b><span>Checklists, sequência operacional e responsabilidades claras.</span></div>
-        <div class="step"><div class="num">4</div><b>Registro</b><span>Evidências organizadas para rastreabilidade e conformidade.</span></div>
-        <div class="step"><div class="num">5</div><b>Evolução</b><span>Ajustes e melhoria contínua para manter performance.</span></div>
-      </div>
-
-      <div style="margin-top:16px" class="twoCol">
-        <div class="card"><h3>O que você ganha</h3><ul class="list"><li>Menos variação e retrabalho</li><li>Mais previsibilidade operacional</li><li>Decisão mais segura no recebimento</li><li>Conformidade e evidências</li></ul></div>
-        <div class="card"><h3>Como começamos</h3><p class="small">Você manda um resumo do cenário (tipo de operação, região, volume e momento da safra) e alinhamos o melhor formato de atendimento.</p><div style="margin-top:12px"><a class="btn primary" href="contato.html">Solicitar diagnóstico</a></div></div>
+      <div class="heroCard">
+        <div class="heroCardTop">
+          <span class="chip chipGold">Atendimento Brasil</span>
+          <span class="chip">Cascavel • PR</span>
+        </div>
+        <div class="heroCardBody">
+          <h3>Precisa de apoio rápido?</h3>
+          <p class="muted">Conte seu cenário (cidade/UF, cultura e período). A gente direciona o melhor formato: equipe, rotina e evidências.</p>
+          <a class="btn btnPrimary" href="https://wa.me/5545983410000?text=Olá!%20Quero%20um%20atendimento%20sobre%20classificação%20de%20grãos%20(soja/trigo/milho).%20Cidade/UF:%20____%20Período:%20____" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          <a class="btn btnGhost" href="solucoes.html">Ver soluções</a>
+        </div>
       </div>
     </div>
   </section>
-</main>
 
-<footer class="footer">
+  
+<section class="section">
   <div class="container">
-    <div class="footerGrid">
+    <div class="split">
       <div>
-        <div class="brand" style="min-width:auto">
-          <img src="assets/img/logo-grao1000.png" srcset="assets/img/logo-grao1000.png 1x, assets/img/logo-grao1000@2x.png 2x" alt="Logo Grão 1000" />
-          <div>
-            <div class="name">Grão 1000</div>
-            <div class="tag">Qualidade • Rastreabilidade • Pós-colheita</div>
-          </div>
+        <h2>Nossa metodologia</h2>
+        <p class="muted">Qualidade forte se sustenta em processo, padrão e evidência. É assim que estruturamos na prática.</p>
+        <div class="steps steps--cards">
+          <div class="stepCard"><div class="stepN">1</div><strong>Diagnóstico</strong><div class="muted">Fluxo atual, gargalos e pontos de atenção.</div></div>
+          <div class="stepCard"><div class="stepN">2</div><strong>Critérios</strong><div class="muted">Padrões técnicos e adequação por cultura.</div></div>
+          <div class="stepCard"><div class="stepN">3</div><strong>Rotina</strong><div class="muted">Checklists, sequência e responsabilidades.</div></div>
+          <div class="stepCard"><div class="stepN">4</div><strong>Registro</strong><div class="muted">Evidências organizadas e auditáveis.</div></div>
+          <div class="stepCard"><div class="stepN">5</div><strong>Evolução</strong><div class="muted">Melhoria contínua e redução de variação.</div></div>
         </div>
-        <p>Matriz/Sede em <b>Avenida Brasil, 2732, ap 7 - São Cristóvão, Cascavel - PR</b>, com atendimento em todo o Brasil.</p>
-        <p><b>WhatsApp:</b> (45) 98341-0000</p>
-        <div class="copy">© <span id="y"></span> Grão 1000. Todos os direitos reservados.</div>
       </div>
-      <div class="footerLinks" aria-label="Links do rodapé">
-        <a href="solucoes.html">Soluções</a>
-        <a href="qualidade.html">Qualidade</a>
-        <a href="sobre.html">Sobre</a>
-        <a href="contato.html">Contato</a>
 
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-          <a class="btn" href="https://www.facebook.com/grao1000" target="_blank" rel="noopener">Facebook</a>
-          <a class="btn" href="https://www.instagram.com/grao.1000/" target="_blank" rel="noopener">Instagram</a>
-          <a class="btn" href="https://www.reachr.com.br/rch/#/graomil-ltda/vagas" target="_blank" rel="noopener">Vagas</a>
-          <a class="btn painel" href="https://grao1000.com.br/painel" target="_blank" rel="noopener">Painel Gestor/ADM</a>
-        </div>
+      <div class="ctaCard">
+        <span class="chip chipGold">Padrão + Evidência</span>
+        <h3>O que você ganha</h3>
+        <ul class="check">
+          <li>Menos retrabalho e divergências no recebimento</li>
+          <li>Conformidade e transparência no fluxo</li>
+          <li>Decisão segura com laudos consistentes</li>
+          <li>Rotina replicável por turnos e unidades</li>
+        </ul>
+        <a class="btn btnPrimary" href="https://wa.me/5545983410000?text=Olá!%20Quero%20entender%20a%20metodologia%20de%20qualidade%20da%20Grão%201000.%20Cidade/UF:%20____%20Cultura:%20____" target="_blank" rel="noopener">Falar com especialista</a>
+        <a class="btn btnGhost" href="assets/docs/apresentacao-grao1000.pdf" target="_blank" rel="noopener">Ver apresentação (PDF)</a>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="sectionHead">
+      <div>
+        <h2>Evidências e rastreabilidade</h2>
+        <p class="muted">Registro não é burocracia: é o que protege a operação e dá previsibilidade.</p>
+      </div>
+    </div>
+
+    <div class="cardGrid cardGrid--3">
+      <article class="infoCard">
+        <h3>Documentação organizada</h3>
+        <p class="muted">Registros por etapa, fácil consulta e histórico para auditorias.</p>
+      </article>
+      <article class="infoCard">
+        <h3>Rastreio de etapas</h3>
+        <p class="muted">Do recebimento ao embarque, com consistência e transparência.</p>
+      </article>
+      <article class="infoCard">
+        <h3>Melhoria contínua</h3>
+        <p class="muted">Ajustes guiados por dados e rotina — não por achismo.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="siteFooter">
+  <div class="container footerGrid">
+    <div>
+      <div class="footerBrand">
+        <img src="assets/img/logo-grao1000-small.png" alt="Logo Grão 1000" />
+        <div>
+          <strong>Grão 1000</strong>
+          <div class="muted">Qualidade • Rastreabilidade • Pós-colheita</div>
+        </div>
+      </div>
+      <p class="muted">
+        Classificação de grãos e suporte pós-colheita com foco em consistência, evidências e decisão segura.
+      </p>
+      <div class="footerBadges">
+        <span class="tagPill">Soja</span>
+        <span class="tagPill">Trigo</span>
+        <span class="tagPill">Milho</span>
+      </div>
+    </div>
+
+    <div>
+      <h4>Contato</h4>
+      <ul class="footerList">
+        <li><a href="https://wa.me/5545983410000" target="_blank" rel="noopener">WhatsApp: (45) 98341-0000</a></li>
+        <li><span class="muted">Cascavel • PR</span></li>
+        <li><span class="muted">Atendimento em todo o Brasil</span></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Links</h4>
+      <ul class="footerList">
+        <li><a href="solucoes.html">Soluções</a></li>
+        <li><a href="qualidade.html">Qualidade</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Ação rápida</h4>
+      <p class="muted">Precisa de apoio na sua operação? Fale com a gente.</p>
+      <a class="btn btnPrimary" href="https://wa.me/5545983410000?text=Olá!%20Quero%20um%20atendimento%20sobre%20classificação%20de%20grãos%20(soja/trigo/milho)." target="_blank" rel="noopener">Falar com especialista</a>
+      <div class="footerSocial">
+        <a class="iconBtn" href="https://www.facebook.com/grao1000" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4v-3c0-.6.4-1 1-1z"/></svg>
+        </a>
+        <a class="iconBtn" href="https://www.instagram.com/grao.1000/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3z"/>
+            <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
+            <path d="M17.5 6.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footerBottom">
+    <span class="muted">© <span id="year"></span> Grão 1000. Todos os direitos reservados.</span>
+    <a class="muted" href="#top">Voltar ao topo ↑</a>
   </div>
 </footer>
 
-
-
-<script src="assets/js/main.js"></script>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
-  </div>
+<a class="whatsFab" href="https://wa.me/5545983410000?text=Olá!%20Quero%20um%20atendimento%20sobre%20classificação%20de%20grãos%20(soja/trigo/milho)." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <span class="whatsDot"></span>
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.44c-.26-.13-1.52-.75-1.76-.84-.24-.09-.42-.13-.6.13-.18.26-.69.84-.85 1.01-.16.18-.31.2-.57.07-.26-.13-1.11-.41-2.12-1.31-.78-.7-1.31-1.57-1.47-1.83-.16-.26-.02-.4.12-.53.12-.12.26-.31.39-.46.13-.15.18-.26.26-.44.09-.18.04-.33-.02-.46-.07-.13-.6-1.45-.82-1.98-.22-.53-.44-.46-.6-.47l-.51-.01c-.18 0-.46.07-.7.33-.24.26-.92.9-.92 2.2 0 1.3.94 2.56 1.07 2.74.13.18 1.85 2.83 4.48 3.97.63.27 1.12.43 1.5.55.63.2 1.2.17 1.65.1.5-.07 1.52-.62 1.73-1.22.22-.6.22-1.11.15-1.22-.07-.11-.24-.18-.5-.31z"/><path d="M26.8 5.2A12.9 12.9 0 0 0 3.1 22.5L2 30l7.7-2A12.9 12.9 0 0 0 29 16c0-3.45-1.34-6.69-3.2-10.8zM16 26.7c-2.1 0-4.15-.56-5.94-1.63l-.42-.25-4.56 1.18 1.22-4.44-.28-.45A10.7 10.7 0 1 1 16 26.7z"/></svg>
+</a>
+<script defer src="assets/js/main.js"></script>
 </body>
 </html>
