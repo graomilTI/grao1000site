@@ -110,7 +110,7 @@
 // =========================
 (function(){
   const FB_POSTS_ENDPOINT = (window.__GRAO1000_CONFIG && window.__GRAO1000_CONFIG.fbPostsEndpoint)
-    || "/fb/posts";
+    || "https://grao1000.com.br/fb/posts";
 
   function trunc(s, max){
     const t = String(s||"").replace(/\s+/g," ").trim();
@@ -187,15 +187,7 @@
 
       const txt = document.createElement('div');
       txt.className = 'fbCardText';
-      txt.textContent = trunc(p.text || "", 120) || "Ver postagem no Facebook";
-
-      const cta = document.createElement('div');
-      cta.className = 'fbCardCta';
-      cta.textContent = 'Abrir no Facebook →';
-
-      body.appendChild(meta);
-      body.appendChild(txt);
-      body.appendChild(cta);
+      txt.textContent = trunc(p.text || "", 160) || "Atualização do Facebook";
 
       a.appendChild(img);
       a.appendChild(body);
