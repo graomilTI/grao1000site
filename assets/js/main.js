@@ -109,25 +109,167 @@
 
 
   // ======= Home: métricas + Facebook =======
-  const HOME_METRICS = {"totals": {"tons_total": 23118878.84, "cargas_total": 1138482, "pontos_embarque": 6357, "colaboradores": 989, "clientes": 653, "cidades": 1023}, "monthly": [{"ym": "2025-01", "tons": 1264812.27}, {"ym": "2025-02", "tons": 2228203.66}, {"ym": "2025-03", "tons": 2774764.49}, {"ym": "2025-04", "tons": 2051034.75}, {"ym": "2025-05", "tons": 2054132.34}, {"ym": "2025-06", "tons": 1932512.92}, {"ym": "2025-07", "tons": 2024569.23}, {"ym": "2025-08", "tons": 2007829.02}, {"ym": "2025-09", "tons": 1946785.79}, {"ym": "2025-10", "tons": 1808925.42}, {"ym": "2025-11", "tons": 1692115.6}, {"ym": "2025-12", "tons": 1333193.36}], "byCoord": [{"name": "GOIAS", "tons": 3947867.26}, {"name": "CASCAVEL", "tons": 2412531.8}, {"name": "RIO GRANDE DO SUL", "tons": 2081055.04}, {"name": "MARINGA E TERMINAIS", "tons": 1764181.48}, {"name": "MATO GROSSO MT2", "tons": 1583411.5}, {"name": "SÃO PAULO", "tons": 1567867.23}, {"name": "LONDRINA", "tons": 1486311.16}, {"name": "MATO GROSSO MT1", "tons": 1427048.39}, {"name": "MATO GROSSO MT3 - CONFRESA", "tons": 1335746.78}, {"name": "PONTA GROSSA", "tons": 1196140.88}], "topCities": [{"city": "QUERÊNCIA", "tons": 617738.42}, {"city": "MARINGÁ", "tons": 418787.41}, {"city": "SÃO FÉLIX DO ARAGUAIA", "tons": 414468.6}, {"city": "MARIALVA", "tons": 397621.39}, {"city": "PRIMAVERA DO LESTE", "tons": 383405.93}, {"city": "RIO VERDE", "tons": 375379.48}, {"city": "JATAÍ", "tons": 313869.01}, {"city": "MONTIVIDIU", "tons": 307734.66}, {"city": "SÃO JOSÉ DO XINGU", "tons": 262245.9}, {"city": "CRUZ ALTA", "tons": 214715.21}, {"city": "BOM JESUS DE GOIÁS", "tons": 214112.69}, {"city": "CORRENTINA", "tons": 205391.35}, {"city": "SORRISO", "tons": 202742.3}, {"city": "IMBITUVA", "tons": 199367.45}, {"city": "CASCAVEL", "tons": 192629.85}, {"city": "MINEIROS", "tons": 190804.21}, {"city": "ALTO GARÇAS", "tons": 180233.75}, {"city": "PONTA GROSSA", "tons": 168271.79}, {"city": "ITAPEVA", "tons": 165307.96}, {"city": "SÃO DESIDÉRIO", "tons": 158652.7}], "topClients": [{"name": "LOUIS DREYFUS COMPANY BRASIL S.A. - PONTA GROSSA", "tons": 1719198.24}, {"name": "LOUIS DREYFUS COMPANY BRASIL S.A. - JATAI", "tons": 828997.71}, {"name": "LOUIS DREYFUS COMPANY BRASIL S.A. - SORRISO", "tons": 799780.78}, {"name": "INTEGRADA - LONDRINA", "tons": 707036.34}, {"name": "CARGILL AGRICOLA - PASSO FUNDO", "tons": 631406.17}, {"name": "CARGILL AGRICOLA - BARREIRAS", "tons": 594615.31}, {"name": "COFCO INTERNATIONAL BRASIL S.A.  - RIO VERDE", "tons": 501101.61}, {"name": "AGRIBRASIL - LONDRINA", "tons": 465780.77}, {"name": "CJ INTERNATIONAL LTDA - PARANAGUA", "tons": 453301.77}, {"name": "BTG PACTUAL COMMODITIES SERTRADING S.A. - GO", "tons": 426096.69}]};
+  const HOME_METRICS = {
+  "year": 2025,
+  "tons_total": 23118878.838999998,
+  "cargas_total": 569241,
+  "pontos_total": 7004,
+  "colab_total": 988,
+  "monthly": [
+    {
+      "ym": "jan/25",
+      "tons": 1264812.268
+    },
+    {
+      "ym": "fev/25",
+      "tons": 2228203.66
+    },
+    {
+      "ym": "mar/25",
+      "tons": 2774764.492
+    },
+    {
+      "ym": "abr/25",
+      "tons": 2051034.748
+    },
+    {
+      "ym": "mai/25",
+      "tons": 2054132.342
+    },
+    {
+      "ym": "jun/25",
+      "tons": 1932512.916
+    },
+    {
+      "ym": "jul/25",
+      "tons": 2024569.228
+    },
+    {
+      "ym": "ago/25",
+      "tons": 2007829.019
+    },
+    {
+      "ym": "set/25",
+      "tons": 1946785.786
+    },
+    {
+      "ym": "out/25",
+      "tons": 1808925.419
+    },
+    {
+      "ym": "nov/25",
+      "tons": 1692115.604
+    },
+    {
+      "ym": "dez/25",
+      "tons": 1333193.357
+    }
+  ],
+  "byCoord": [
+    {
+      "name": "GOIAS",
+      "tons": 3947867.257
+    },
+    {
+      "name": "CASCAVEL",
+      "tons": 2412531.797
+    },
+    {
+      "name": "RIO GRANDE DO SUL",
+      "tons": 2081055.042
+    },
+    {
+      "name": "MARINGA E TERMINAIS",
+      "tons": 1764181.476
+    },
+    {
+      "name": "MATO GROSSO MT2",
+      "tons": 1583411.505
+    },
+    {
+      "name": "SÃO PAULO",
+      "tons": 1567867.227
+    },
+    {
+      "name": "LONDRINA",
+      "tons": 1486311.158
+    },
+    {
+      "name": "MATO GROSSO MT1",
+      "tons": 1427048.391
+    },
+    {
+      "name": "MATO GROSSO MT3 - CONFRESA",
+      "tons": 1335746.776
+    },
+    {
+      "name": "PONTA GROSSA",
+      "tons": 1196140.876
+    }
+  ],
+  "topPoints": [
+    {
+      "name": "MARIALVA | CHS AGRONEGOCIO",
+      "tons": 333429.288
+    },
+    {
+      "name": "MARINGÁ | RHALL TERMINAIS LTDA",
+      "tons": 242874.592
+    },
+    {
+      "name": "ITAPEVA | COOP. HOLAMBRA TAKAOKA - ITAPEVA",
+      "tons": 131747.632
+    },
+    {
+      "name": "MARINGÁ | COCAMAR - MARINGA",
+      "tons": 129500.558
+    },
+    {
+      "name": "BOM JESUS DE GOIÁS | AGROBOM ARMAZENS GERAIS LTDA - BOM JESUS DE GOIAS",
+      "tons": 107882.89199999999
+    },
+    {
+      "name": "CRUZ ALTA | CEIFAGRO - CRUZ ALTA",
+      "tons": 99959.79
+    },
+    {
+      "name": "PARANAPANEMA | COOP HOLAMBRA - MATRIZ",
+      "tons": 98152.995
+    },
+    {
+      "name": "IMBITUVA | SITIO ALVORADA - IMBITUVA",
+      "tons": 97805.225
+    },
+    {
+      "name": "ROLÂNDIA | RICOLOG - TRANSBORDO E MULTIMO",
+      "tons": 96715.015
+    },
+    {
+      "name": "RANCHARIA | COMGROUP AGROINDUSTRIAL",
+      "tons": 92858.61
+    }
+  ],
+  "source": "Relatório operacional 2025"
+};
+
 
   function fmtNum(n, opts={}){
-    try{
-      return new Intl.NumberFormat('pt-BR', opts).format(n);
-    }catch(e){ return String(n); }
+  try{
+    return new Intl.NumberFormat('pt-BR', opts).format(n);
+  }catch(e){ return String(n); }
+}
 
-  function fmtMonthPt_(ym) {
-    // ym: "YYYY-MM"
-    if (!ym || typeof ym !== "string") return String(ym ?? "");
-    const [y, m] = ym.split("-");
-    const mm = Number(m);
-    const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-    const sigla = meses[(mm || 1) - 1] || m;
-    return `${sigla}/${String(y).slice(-2)}`;
-  }
-  }
+function fmtMonthPt_(ym) {
+  // ym: "YYYY-MM"
+  if (!ym || typeof ym !== "string") return String(ym ?? "");
+  const [y, m] = ym.split("-");
+  const mm = Number(m);
+  const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const sigla = meses[(mm || 1) - 1] || m;
+  return `${sigla}/${String(y).slice(-2)}`;
+}
 
-  function setMetric(el, value, kind){
+function setMetric(el, value, kind){
     if(!el) return;
     if(kind==='tons') el.textContent = fmtNum(value, {maximumFractionDigits:0}) + ' t';
     else el.textContent = fmtNum(value, {maximumFractionDigits:0});
@@ -190,61 +332,121 @@
   }
 
   function buildCharts_(){
-    // Monthly
-    const m = HOME_METRICS.monthly || [];
-    const mLabels = m.map(x=>x.ym);
-    const mVals = m.map(x=>x.tons);
+  // Volume por mês
+  const cMes = $("#chartMonthly");
+  if (cMes && window.Chart){
+    const labels = (HOME_METRICS.monthly || []).map(r => r.ym);
+    const values = (HOME_METRICS.monthly || []).map(r => r.tons);
 
-    const c1 = document.getElementById('chartMonthly');
-    if(c1 && !c1.__inited){
-      c1.__inited = true;
-      new Chart(c1, {
-        type: 'line',
-        data: {
-          labels: mLabels,
-          datasets: [{ label:'Toneladas', data:mVals, tension:0.25, pointRadius:0, borderWidth:2, fill:true }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display:false },
-            tooltip: { callbacks: { label: (ctx)=> fmtNum(ctx.parsed.y, {maximumFractionDigits:0}) + ' t' } }
-          },
-          scales: {
-            x: { ticks: { maxRotation:0, autoSkip:true } },
-            y: { ticks: { callback:(v)=> fmtNum(v, {notation:'compact'}) } }
+    new Chart(cMes, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [{
+          label: "Toneladas",
+          data: values,
+          fill: true,
+          tension: 0.35,
+          pointRadius: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ` ${fmtNum(ctx.parsed.y, {maximumFractionDigits: 0})} t`
+            }
           }
-        }
-      });
-    }
-
-    // Coord
-    const bc = HOME_METRICS.byCoord || [];
-    const cLabels = bc.map(x=>x.name);
-    const cVals = bc.map(x=>x.tons);
-    const c2 = document.getElementById('chartCoord');
-    if(c2 && !c2.__inited){
-      c2.__inited = true;
-      new Chart(c2, {
-        type:'bar',
-        data: {
-          labels: cLabels,
-          datasets: [{ label:'Toneladas', data:cVals, borderWidth:0, borderRadius:10 }]
         },
-        options:{
-          indexAxis:"y",
-          responsive:true,
-          plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(ctx)=> fmtNum(ctx.parsed.y, {maximumFractionDigits:0})+' t' } } },
-          scales: {
-            x: { ticks: { autoSkip:false, maxRotation:0 }, grid:{display:false} },
-            y: { ticks: { callback:(v)=> fmtNum(v, {notation:'compact'}) } }
-          }
+        scales: {
+          y: { ticks: { callback: v => fmtNum(v, {notation: "compact", maximumFractionDigits: 1}) } },
+          x: { ticks: { maxRotation: 0, autoSkip: true } }
         }
-      });
-    }
+      }
+    });
+  }
 
+  // Top coordenações (compliance: sem clientes)
+  const cCoord = $("#chartCoord");
+  if (cCoord && window.Chart){
+    const fullLabels = (HOME_METRICS.byCoord || []).map(r => r.name);
+    const labels = fullLabels.map(s => (s.length > 18 ? s.slice(0, 18) + "…" : s));
+    const values = (HOME_METRICS.byCoord || []).map(r => r.tons);
 
-  async function geocodeCity_(q){
+    new Chart(cCoord, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [{
+          label: "Toneladas",
+          data: values,
+          borderRadius: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: "y",
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (items) => fullLabels[items[0].dataIndex] || "",
+              label: (ctx) => ` ${fmtNum(ctx.parsed.x, {notation: "compact", maximumFractionDigits: 2})} t`
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { callback: v => fmtNum(v, {notation: "compact", maximumFractionDigits: 1}) } },
+          y: { ticks: { autoSkip: false } }
+        }
+      }
+    });
+  }
+
+  // Top pontos de embarque (Cidade | Local)
+  const cPts = $("#chartClients");
+  if (cPts && window.Chart){
+    const fullLabels = (HOME_METRICS.topPoints || []).map(r => r.name);
+    const labels = fullLabels.map(s => (s.length > 26 ? s.slice(0, 26) + "…" : s));
+    const values = (HOME_METRICS.topPoints || []).map(r => r.tons);
+
+    new Chart(cPts, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [{
+          label: "Toneladas",
+          data: values,
+          borderRadius: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: "y",
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (items) => fullLabels[items[0].dataIndex] || "",
+              label: (ctx) => ` ${fmtNum(ctx.parsed.x, {notation: "compact", maximumFractionDigits: 2})} t`
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { callback: v => fmtNum(v, {notation: "compact", maximumFractionDigits: 1}) } },
+          y: { ticks: { autoSkip: false } }
+        }
+      }
+    });
+  }
+}
+
+async function geocodeCity_(q){
     // localStorage cache (30d)
     const key = 'geo:'+q.toLowerCase();
     try{
