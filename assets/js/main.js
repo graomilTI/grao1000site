@@ -7,6 +7,25 @@
     });
   }
 
+  // BI polish: header shadow + progress bar
+  const header = document.querySelector('.header');
+  const progress = document.createElement('div');
+  progress.className = 'topProgress';
+  document.body.appendChild(progress);
+
+  function onScrollUi(){
+    const y = window.scrollY || 0;
+    if(header){
+      header.classList.toggle('scrolled', y > 6);
+    }
+    const doc = document.documentElement;
+    const max = Math.max(1, (doc.scrollHeight - doc.clientHeight));
+    const pct = Math.min(100, Math.max(0, (y / max) * 100));
+    progress.style.width = pct.toFixed(2) + '%';
+  }
+  window.addEventListener('scroll', onScrollUi, { passive:true });
+  onScrollUi();
+
   // Active link
   const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('[data-nav]').forEach(a=>{
@@ -163,13 +182,31 @@
     const root = document.getElementById('metricas');
     if(!root) return;
     const t = HOME_METRICS?.totals || {};
-    root.querySelectorAll('[data-metric]').forEach(el=>{
+    // anima números ao entrar no viewport
+    const els = Array.from(root.querySelectorAll('[data-metric]'));
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(!en.isIntersecting) return;
+        const el = en.target;
+        io.unobserve(el);
+        const k = el.getAttribute('data-metric');
+        const v = t[k];
+        if(typeof v === 'number') animateMetric_(el, v, k==='tons_total');
+      });
+    }, { threshold: 0.45 }) : null;
+
+    els.forEach(el=>{
       const k = el.getAttribute('data-metric');
       const v = t[k];
       if(typeof v === 'number'){
+        // fallback instant
         setMetric(el, v, k==='tons_total' ? 'tons' : 'int');
+        if(io) io.observe(el);
       }
     });
+
+    // sparklines nos cards de KPI
+    buildSparklines_(root);
 
     if(window.Chart){
       buildCharts_();
@@ -177,6 +214,89 @@
     if(window.L){
       buildMap_();
     }
+  }
+
+  function animateMetric_(el, target, isTons){
+    if(el.__animDone) return;
+    el.__animDone = true;
+    const start = 0;
+    const dur = 900;
+    const t0 = performance.now();
+    function step(now){
+      const p = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = start + (target - start) * eased;
+      if(isTons) el.textContent = fmtNum(val, {maximumFractionDigits:0}) + ' t';
+      else el.textContent = fmtNum(val, {maximumFractionDigits:0});
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function buildSparklines_(root){
+    const cards = root.querySelectorAll('.statCard');
+    if(!cards.length) return;
+    const series = (HOME_METRICS.monthly || []).map(x=>Number(x.tons)||0).filter(n=>Number.isFinite(n));
+    if(!series.length) return;
+
+    const css = getComputedStyle(document.documentElement);
+    const color = (css.getPropertyValue('--brand') || '#2F6F3E').trim();
+    const fill = 'rgba(47,111,62,.14)';
+
+    cards.forEach((card, idx)=>{
+      if(card.querySelector('canvas.spark')) return;
+      const c = document.createElement('canvas');
+      c.className = 'spark';
+      c.width = 360;
+      c.height = 70;
+      card.appendChild(c);
+      drawSpark_(c, series, idx, color, fill);
+    });
+  }
+
+  function drawSpark_(canvas, data, seed, stroke, fill){
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+    const pad = 8;
+    const xs = w - pad*2;
+    const ys = h - pad*2;
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const span = Math.max(1, max - min);
+
+    // leve variação por card (BI "vivo")
+    const phase = (seed % 7) * 0.07;
+    const pts = data.map((v,i)=>{
+      const x = pad + (i/(data.length-1))*xs;
+      const y0 = pad + (1-((v-min)/span))*ys;
+      const y = y0 + Math.sin((i*0.9)+phase) * 1.2;
+      return {x,y};
+    });
+
+    // fill
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, h-pad);
+    pts.forEach(p=>ctx.lineTo(p.x,p.y));
+    ctx.lineTo(pts[pts.length-1].x, h-pad);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+
+    // line
+    ctx.beginPath();
+    pts.forEach((p,i)=>{ if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // last dot
+    const last = pts[pts.length-1];
+    ctx.beginPath();
+    ctx.arc(last.x,last.y,3.5,0,Math.PI*2);
+    ctx.fillStyle = stroke;
+    ctx.fill();
   }
 
   function buildCharts_(){
